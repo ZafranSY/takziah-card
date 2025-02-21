@@ -16,6 +16,23 @@
 
 body {
   color: var(--foreground);
-  background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+/* select option {
+  max-width: 100%;
+  padding-block-start: 0px;
+  padding-block-end: 0px;
+  min-block-size: 0em;
+  padding-inline: 0px;
+  white-space: nowrap;
+  --tw-scale-x:0;
+  width: 50%;
+} */
+select#language {
+  min-width: 100%;
+}
+
+select#language option {
+  padding: 0;
+  white-space: normal;
 }
