@@ -3,12 +3,9 @@ import MainPage  from "./component/mainPage";
 import Sidebar from "./component/InputPanel";
 export default function Home() {
   return (
-    <div className="">  
+    <div className="bg-white dark:bg-gray-800">  
        <Sidebar/>
 
-     <h1 className="text-pink-400">testing</h1>
-
-     <MainPage/>
     </div>
   );
 }
