@@ -36,3 +36,15 @@ select#language option {
   padding: 0;
   white-space: normal;
 }
+ /* Default Styles for Light Mode */
+ input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0); /* Icon stays black in light mode */
+}
+
+/* Dark Mode Styles */
+html.dark
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* Icon turns white in dark mode */
+}
+/* Dark Mode Styles */
+
