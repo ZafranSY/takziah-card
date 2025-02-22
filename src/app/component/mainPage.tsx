@@ -16,10 +16,10 @@ const MainPage = () => {
 
   // Input screen for now (or other inputs if needed)
   return (
-    <div className="w-full h-full flex justify-center items-center bg-gray-50 dark:bg-gray-800">
-  <div className="p-6 bg-white dark:bg-gray-900 rounded-lg shadow-md w-full max-w-xl h-[95%] max-h-[95%] py-3">
+    <div className="w-full h-full flex justify-center items-center bg-gray-50 dark:bg-gray-800 mx-auto">
+  <div className="p-6 bg-white dark:bg-gray-900 rounded-lg shadow-md w-full h-full max-h-[95%] py-3 mx-auto">
 
-       <div>
+       <div  className="h-[90%]">
         <TemplatePage/>
        </div>
       
