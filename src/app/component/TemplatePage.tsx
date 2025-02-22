@@ -1,7 +1,11 @@
 "use client";
 import React from "react";
 import ImageSample  from "../../../public/image.png";
-
+import { Amiri } from "next/font/google";
+ const amiri = Amiri({
+  subsets:['arabic'],
+  weight :['400','700'],
+ });
 interface TemplatePageProps {
   image?: string; // Path to the image
   message?: string; // Optional custom message
@@ -16,7 +20,7 @@ const TemplatePage: React.FC<TemplatePageProps> = ({
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-md text-center">
         <div className="mb-4">
           {/* Display the image */}
-          <h1 className="text-black">
+          <h1 className="text-black font-arabic text-2xl">
           إِنَّا لِلَّٰهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ
           </h1>
           <img
