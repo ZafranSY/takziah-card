@@ -16,6 +16,9 @@ const TemplatePage: React.FC<TemplatePageProps> = ({
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-md text-center">
         <div className="mb-4">
           {/* Display the image */}
+          <h1 className="text-black">
+          إِنَّا لِلَّٰهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ
+          </h1>
           <img
             src={image}
             alt="Generated Takziah Card"
