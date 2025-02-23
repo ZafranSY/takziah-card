@@ -3,41 +3,49 @@ import React, { useState } from "react";
 import TemplatePage from "./TemplatePage";
 
 const MainPage = () => {
-  const [showTemplate, setShowTemplate] = useState(false); // State to toggle between input and template view
+  const [showTemplate, setShowTemplate] = useState(false);
 
   const handleGenerateTemplate = () => {
     setShowTemplate(true);
   };
 
-  if (showTemplate) {
-    // Show the generated template
-    return <TemplatePage />;
-  }
+  const handleDownload = () => {
+    // Implement download functionality
+    console.log("Download clicked");
+  };
 
-  // Input screen for now (or other inputs if needed)
+  const handleReset = () => {
+    // Implement reset functionality
+    console.log("Reset clicked");
+  };
+
   return (
-    <div className="w-full h-full flex justify-center items-center bg-gray-50 dark:bg-gray-800 mx-auto">
-  <div className="p-6 bg-white dark:bg-gray-900 rounded-lg shadow-md w-full h-full max-h-[95%] py-3 mx-auto">
-
-       <div  className="h-[90%]">
-        <TemplatePage/>
-       </div>
-      
-      <div className="flex mt-4 gap-4 justify-center items-center">
-          <button
-            // onClick={handleDownload}
-            className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600"
-          >
-            Download
-          </button>
-          <button
-            // onClick={handleReset}
-            className="bg-gray-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-gray-600"
-          >
-            Reset
-          </button>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-800 p-4 flex justify-center">
+      <div className="max-w-4xl mx-auto flex flex-col h-full">
+        {/* Container for template and buttons */}
+        <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-6 flex flex-col">
+          {/* Template container with fixed height and scrollable if needed */}
+          <div className="flex-1 overflow-auto mb-6">
+            <TemplatePage />
+          </div>
+          
+          {/* Buttons container - fixed at bottom */}
+          <div className="flex justify-center gap-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+            <button
+              onClick={handleDownload}
+              className="bg-blue-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-blue-600 transition-colors"
+            >
+              Download
+            </button>
+            <button
+              onClick={handleReset}
+              className="bg-gray-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-gray-600 transition-colors"
+            >
+              Reset
+            </button>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
   );
 };
