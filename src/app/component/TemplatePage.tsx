@@ -14,9 +14,9 @@ interface TemplatePageProps {
 }
 
 const TemplatePage: React.FC<TemplatePageProps> = ({
-  name = "TUN HAJAH RAHAH BINTI TAN SRI HAJI MOHAMED NOAH",
+  name = "",
   image = "/api/placeholder/400/400",
-  from = "KDYMM SERI PADUKA BAGINDA YANG DI-PERTUAN AGONG dan KDYMM SERI PADUKA BAGINDA RAJA PERMAISURI AGONG"
+  from = ""
 }) => {
   return (
     <div className="w-full min-h-screen bg-black flex justify-center items-center p-4">
