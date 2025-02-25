@@ -1,26 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import TemplatePage from "./TemplatePage";
-interface TemplateData {
-  name: string;
-  image: string;
-  from: string;
-}
+
 const MainPage = () => {
   const [showTemplate, setShowTemplate] = useState(false);
 
   const handleGenerateTemplate = () => {
     setShowTemplate(true);
   };
-  const [templateData, setTemplateData] = useState<TemplateData>({
-    name: "",
-    image: "/api/placeholder/400/400",
-    from: ""
-  });
 
-  const handleDataChange = (data: TemplateData) => {
-    setTemplateData(data);
-  };
   const handleDownload = () => {
     // Implement download functionality
     console.log("Download clicked");
@@ -38,7 +26,7 @@ const MainPage = () => {
         <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-6 flex flex-col">
           {/* Template container with fixed height and scrollable if needed */}
           <div className="flex-1 overflow-auto mb-6">
-            <TemplatePage ={templateData} />
+            <TemplatePage />
           </div>
           
           {/* Buttons container - fixed at bottom */}
