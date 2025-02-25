@@ -17,7 +17,7 @@ const InputPanel = ({onDataSubmit}: {onDataSubmit : (data:any) =>void}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const languages = ["Malay", "English"];
-
+  const [showExtraMessage, setShowExtraMessage ] = useState(false);
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -100,6 +100,7 @@ const InputPanel = ({onDataSubmit}: {onDataSubmit : (data:any) =>void}) => {
               id="upload-file"
               className="hidden"
               onChange={handleImageUpload}
+              
               // onChange={(e)=>setSelectedImage(e.target.value)}
 
               accept="image/*"
@@ -174,7 +175,7 @@ const InputPanel = ({onDataSubmit}: {onDataSubmit : (data:any) =>void}) => {
                       setIsOpen(false);
                     }}
                   >
-                    <span className={`flex-1 ${selectedLanguage === language ? 'text-blue-500 dark:text-blue-400' : ''}`}>
+                  <span className={`flex-1 ${data.selectedLanguage === language ? 'text-blue-500 dark:text-blue-400' : ''}`}>
                       {language}
                     </span>
                     {data.selectedLanguage === language && (
@@ -202,7 +203,7 @@ const InputPanel = ({onDataSubmit}: {onDataSubmit : (data:any) =>void}) => {
                 type="checkbox"
                 className="sr-only peer"
                 checked={data.showExtraMessage}
-                onChange={(e) => handleInputChange("extraMessage",e.target.checked)}
+                onChange={(e) => handleInputChange("showExtraMessage",e.target.checked) }
               />
               <div className="w-11 h-6 bg-slate-200 dark:bg-slate-700 
                 peer-focus:ring-2 peer-focus:ring-blue-400 rounded-full peer 
