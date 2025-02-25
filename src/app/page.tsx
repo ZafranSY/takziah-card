@@ -6,6 +6,14 @@ import { SiE } from "react-icons/si";
 
 
 export default function Home() {
+  const [templateData, setTemplateData] = useState<TemplateData>({
+    name: "",
+    image: "/api/placeholder/400/400",
+    from: ""
+  });
+  const handleDataChange = (data: TemplateData) => {
+    setTemplateData(data);
+  };
   return (
     <div className="bg-white dark:bg-gray-800 flex h-screen">  
     <div className="w-1/4">
