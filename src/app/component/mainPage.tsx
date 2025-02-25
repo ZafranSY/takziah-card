@@ -38,7 +38,7 @@ const MainPage = () => {
         <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-6 flex flex-col">
           {/* Template container with fixed height and scrollable if needed */}
           <div className="flex-1 overflow-auto mb-6">
-            <TemplatePage />
+            <TemplatePage ={templateData} />
           </div>
           
           {/* Buttons container - fixed at bottom */}
