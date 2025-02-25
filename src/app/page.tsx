@@ -4,6 +4,11 @@ import Sidebar from "./component/InputPanel";
 import ThemeToggle from "./component/ThemeToggle";
 import { SiE } from "react-icons/si";
 
+interface TemplateData {
+  name: string;
+  image: string;
+  from: string;
+}
 
 export default function Home() {
   const [templateData, setTemplateData] = useState<TemplateData>({
