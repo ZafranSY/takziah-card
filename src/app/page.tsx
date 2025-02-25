@@ -25,7 +25,7 @@ export default function Home() {
   return (
     <div className="bg-white dark:bg-gray-800 flex h-screen">  
     <div className="w-1/4">
-    <InputPanel onDataChange={handleDataChange} />
+    <InputPanel onDataChange = {handleDataChange} />
 
     </div>
     <div className="  w-3/4 mx-auto">
