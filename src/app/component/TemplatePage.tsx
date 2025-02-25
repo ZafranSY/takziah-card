@@ -54,7 +54,7 @@ const TemplatePage: React.FC<TemplatePageProps> = ({
           
           {/* Prayer */}
           <p className="text-sm px-12 my-6">
-            Semoga rohnya dicucuri rahmat dan ditempatkan di dalam kalangan mereka yang beriman
+            Semoga rohnya dicucuri rahmat dan ditempatkan di dalam kalangan mereka yang 
           </p>
           
           {/* Image */}
