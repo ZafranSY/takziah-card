@@ -1,67 +1,79 @@
 "use client"
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import TakziahLogo from "../../../public/logo1.svg"
 import ThemeToggle from "./ThemeToggle";
 
-interface TemplateData{
-  name : string,
-  image:string,
-  extraMessage:string
+interface TemplateData {
+  name: string;
+  image: string;
+  extraMessage: string;
+  language: string;
+  boolExtraMessage: boolean;
+  dateOfDeath: string;
 }
-interface InputPanelProps
-{
-onDataChange:( data: TemplateData) =>void;
-}
-const InputPanel:React.FC<InputPanelProps> =({ onDataChange})=> {
 
-  const [FormData,setFormData] = useState<TemplateData>({
-    name:"",
-    image:"",
-    extraMessage:"",
+interface InputPanelProps {
+  onDataChange: (data: TemplateData) => void;
+}
+
+const InputPanel: React.FC<InputPanelProps> = ({ onDataChange }) => {
+  const [formData, setFormData] = useState<TemplateData>({
+    name: "",
+    image: "",
+    extraMessage: "",
+    language: "Malay", // Default language
+    boolExtraMessage: false, // Boolean, not string
+    dateOfDeath: ""
   });
 
-  // const [data, setData] = useState({
-  //   memorialName: "",
-  //   showExtraMessage: false,
-  //   selectedLanguage: "Malay",
-  //   selectedImage: null as string | null,
-  //   extraMessage: "",
-  // });
   const [isOpen, setIsOpen] = useState(false);
-
   const languages = ["Malay", "English"];
-  // const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = e.target.files?.[0];
-  //   if (file) {
-  //     setData((prevData) => ({
-  //       ...prevData,
-  //       selectedImage: URL.createObjectURL(file),
-  //     }));    }
-  // };
-  // const handleInputChange = (
-  //   field: string,
-  //   value: string | boolean | null
-  // ) => {
-  //   setData((prevData) => ({
-  //     ...prevData,
-  //     [field]: value,
-  //   }));
-  // };
-  // const handleDataSubmit = () => {
-  //   onDataSubmit({
-  //     image: data.selectedImage,
-  //     name: data.memorialName,
-  //     language: data.selectedLanguage,
-  //     extraMessage: data.showExtraMessage ? data.extraMessage : "",
-  //   });
-  // };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Use useEffect to notify parent of initial state
+  useEffect(() => {
+    onDataChange(formData);
+  }, []);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setFormData(prevData => ({
+        ...prevData,
+        image: imageUrl
+      }));
+      onDataChange({ ...formData, image: imageUrl });
+    }
+  };
+  
+  const handleLanguageSelect = (language: string) => {
+    setFormData(prevData => ({ ...prevData, language }));
+    onDataChange({ ...formData, language });
+    setIsOpen(false);
+  };
+  
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-    onDataChange({ ...formData, [name]: value }); // Send updated data to parent
+    setFormData(prevData => ({ ...prevData, [name]: value }));
+    onDataChange({ ...formData, [name]: value });
+  };
+
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    setFormData(prevData => ({ ...prevData, [name]: checked }));
+    onDataChange({ ...formData, [name]: checked });
+  };
+
+  const handleDataSubmit = () => {
+    // Final submission of data to parent component
+    onDataChange(formData);
+  };
+
+  const handleImageRemove = () => {
+    setFormData(prevData => ({ ...prevData, image: "" }));
+    onDataChange({ ...formData, image: "" });
   };
 
   return (
@@ -89,50 +101,47 @@ const InputPanel:React.FC<InputPanelProps> =({ onDataChange})=> {
       
       {/* Main Content */}
       <div className="flex flex-col p-6 space-y-6 overflow-y-auto">
-      <div>
-            <label className="block text-sm text-slate-600 dark:text-slate-300">Name :</label>
-           <input
+        <div>
+          <label className="block text-sm text-slate-600 dark:text-slate-300">Name:</label>
+          <input
             type="text"
-            name="dateOfDeath"
-            // value={formData.dateOfDeath}
-             onChange={(e) => handleInputChange( "memorialName",e.target.value)}
+            name="name" // Changed from dateOfDeath to name
+            value={formData.name}
+            onChange={handleChange}
             className="w-full mt-3 p-3 h-10 rounded-lg text-slate-700 dark:text-white bg-white dark:bg-slate-800
-               border border-slate-200 dark:border-slate-700
-               focus:border-blue-400 dark:focus:border-blue-500 
-               focus:ring-1 focus:ring-blue-400 dark:focus:ring-blue-500 
-               transition-colors
-               text-sm shadow-sm"
-                
-             />
-         </div>
+              border border-slate-200 dark:border-slate-700
+              focus:border-blue-400 dark:focus:border-blue-500 
+              focus:ring-1 focus:ring-blue-400 dark:focus:ring-blue-500 
+              transition-colors
+              text-sm shadow-sm"
+          />
+        </div>
+        
         {/* Image Upload Section */}
         <div className="w-full">
           <label className="block text-sm font-medium mb-2 text-slate-600 dark:text-slate-300">
             Memorial Image
           </label>
           <div className={`relative h-48 rounded-lg border-2 border-dashed 
-             ${data.selectedImage ? 'border-blue-500 dark:border-blue-400' : 'border-slate-300 dark:border-slate-600'} 
+            ${formData.image ? 'border-blue-500 dark:border-blue-400' : 'border-slate-300 dark:border-slate-600'} 
             transition-all duration-300 hover:border-blue-400 dark:hover:border-blue-500
             bg-slate-50 dark:bg-slate-800/50`}>
             <input
               type="file"
               id="upload-file"
               className="hidden"
-              onChange={handleImageUpload}
-              
-              // onChange={(e)=>setSelectedImage(e.target.value)}
-
+              onChange={handleFileChange}
               accept="image/*"
             />
-            {data.selectedImage ? (
+            {formData.image ? (
               <div className="relative h-full">
                 <img
-                  src={data.selectedImage}
+                  src={formData.image}
                   alt="Preview"
                   className="w-full h-full object-cover rounded-lg"
                 />
                 <button
-                  onClick={() => handleInputChange("selectedImage",null)}
+                  onClick={handleImageRemove}
                   className="absolute top-2 right-2 p-1.5 bg-red-500 rounded-full hover:bg-red-600 transition-colors text-white"
                 >
                   <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
@@ -173,7 +182,7 @@ const InputPanel:React.FC<InputPanelProps> =({ onDataChange})=> {
                 <svg className="w-5 h-5 mr-2 text-blue-500 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
                 </svg>
-                {data.selectedLanguage}
+                {formData.language}
               </div>
               <svg className={`w-5 h-5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -189,15 +198,12 @@ const InputPanel:React.FC<InputPanelProps> =({ onDataChange})=> {
                     key={language}
                     className="w-full text-left p-3 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors duration-200
                       flex items-center space-x-2"
-                    onClick={() => {
-                      handleInputChange("selectedLanguage",language);
-                      setIsOpen(false);
-                    }}
+                    onClick={() => handleLanguageSelect(language)}
                   >
-                  <span className={`flex-1 ${data.selectedLanguage === language ? 'text-blue-500 dark:text-blue-400' : ''}`}>
+                    <span className={`flex-1 ${formData.language === language ? 'text-blue-500 dark:text-blue-400' : ''}`}>
                       {language}
                     </span>
-                    {data.selectedLanguage === language && (
+                    {formData.language === language && (
                       <svg className="w-5 h-5 text-blue-500 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
@@ -221,8 +227,9 @@ const InputPanel:React.FC<InputPanelProps> =({ onDataChange})=> {
               <input
                 type="checkbox"
                 className="sr-only peer"
-                checked={data.showExtraMessage}
-                onChange={(e) => handleInputChange("showExtraMessage",e.target.checked) }
+                name="boolExtraMessage"
+                checked={formData.boolExtraMessage}
+                onChange={handleCheckboxChange}
               />
               <div className="w-11 h-6 bg-slate-200 dark:bg-slate-700 
                 peer-focus:ring-2 peer-focus:ring-blue-400 rounded-full peer 
@@ -232,8 +239,11 @@ const InputPanel:React.FC<InputPanelProps> =({ onDataChange})=> {
             </label>
           </div>
 
-          {data.showExtraMessage && (
+          {formData.boolExtraMessage && (
             <textarea
+              name="extraMessage"
+              value={formData.extraMessage}
+              onChange={handleChange}
               className="w-full mt-3 p-3 h-32 rounded-lg bg-white dark:bg-slate-800
                 border border-slate-200 dark:border-slate-700
                 focus:border-blue-400 dark:focus:border-blue-500 
@@ -244,22 +254,22 @@ const InputPanel:React.FC<InputPanelProps> =({ onDataChange})=> {
             />
           )}
         </div>
-          <div>
-            <label className="block text-sm text-slate-600 dark:text-slate-300">Date of Death:</label>
-           <input
+        
+        <div>
+          <label className="block text-sm text-slate-600 dark:text-slate-300">Date of Death:</label>
+          <input
             type="date"
             name="dateOfDeath"
-            // value={formData.dateOfDeath}
-            // onChange={handleInputChange}
+            value={formData.dateOfDeath}
+            onChange={handleChange}
             className="w-full mt-3 p-3 h-10 rounded-lg text-slate-700 dark:text-white bg-white dark:bg-slate-800
-               border border-slate-200 dark:border-slate-700
-               focus:border-blue-400 dark:focus:border-blue-500 
-               focus:ring-1 focus:ring-blue-400 dark:focus:ring-blue-500 
-               transition-colors
-               text-sm shadow-sm"
-                
-             />
-         </div>
+              border border-slate-200 dark:border-slate-700
+              focus:border-blue-400 dark:focus:border-blue-500 
+              focus:ring-1 focus:ring-blue-400 dark:focus:ring-blue-500 
+              transition-colors
+              text-sm shadow-sm"
+          />
+        </div>
       </div>
 
       {/* Footer */}
