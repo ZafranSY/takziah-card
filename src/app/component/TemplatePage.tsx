@@ -6,18 +6,37 @@ const amiri = Amiri({
   subsets: ['arabic'],
   weight: ['400', '700'],
 });
-
+interface TemplateData{
+  name :string,
+  image: string;
+  extraMessage : string
+  language: string 
+  boolExtraMessage: boolean
+  dateOfDeath: string
+}
 interface TemplatePageProps {
-  name?: string;
-  image?: string;
-  from?: string;
+ data: TemplateData;
 }
 
-const TemplatePage: React.FC<TemplatePageProps> = ({
-  name = "",
-  image = "/api/placeholder/400/400",
-  from = ""
-}) => {
+const TemplatePage: React.FC<TemplatePageProps> = ({data}) => {
+  const getLocalizedText = () => {
+    if (data.language === "Malay") {
+      return {
+        title: "Takziah",
+        subtitle: "Dengan penuh kesedihan, kami mengumumkan pemergian",
+        date: "Tarikh Kematian",
+        message: "Semoga Allah mencucuri rahmat ke atas roh beliau"
+      };
+    } else {
+      return {
+        title: "Condolences",
+        subtitle: "With great sadness, we announce the passing of",
+        date: "Date of Death",
+        message: "May their soul rest in peace"
+      };
+    }
+  };
+  const text = getLocalizedText();
   return (
     <div className="w-full min-h-screen bg-black flex justify-center items-center p-4">
       <div className="max-w-2xl w-full bg-black text-white text-center p-6">
@@ -41,26 +60,26 @@ const TemplatePage: React.FC<TemplatePageProps> = ({
 
         {/* Main Content */}
         <div className="space-y-4">
-          <h2 className="text-xl font-semibold">TAKZIAH</h2>
-          <p className="text-sm">Kepada seluruh keluarga</p>
+          <h2 className="text-xl font-semibold">text.title</h2>
+          <p className="text-sm">text.subtitle</p>
           
           {/* Divider */}
           <div className="w-3/4 h-px bg-white mx-auto my-6"></div>
           
           {/* Name */}
           <h3 className="text-xl font-bold px-8">
-            {name}
+            {data.name}
           </h3>
           
           {/* Prayer */}
           <p className="text-sm px-12 my-6">
-            Semoga rohnya dicucuri rahmat dan ditempatkan di dalam kalangan mereka yang 
-          </p>
+            text.message 
+                     </p>
           
           {/* Image */}
           <div className="w-48 h-48 mx-auto my-8 rounded-full overflow-hidden">
             <img
-              src={image}
+              src={data.image}
               alt="Memorial"
               className="w-full h-full object-cover grayscale"
             />
@@ -73,7 +92,7 @@ const TemplatePage: React.FC<TemplatePageProps> = ({
           <div className="mt-6">
             <p className="text-sm mb-2">DARIPADA</p>
             <p className="text-lg font-semibold px-8">
-              {from}
+              {data.dateOfDeath}
             </p>
           </div>
         </div>
