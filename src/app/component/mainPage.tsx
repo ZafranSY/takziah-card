@@ -23,13 +23,23 @@ const MainPage: React.FC = () => {
     boolExtraMessage: false,
     dateOfDeath: ""
   });
+  const [finalData, setFinalData] = useState<TemplateData>({
+    name: "",
+    image: "",
+    extraMessage: "",
+    language: "Malay",
+    boolExtraMessage: false,
+    dateOfDeath: ""
+  });
   const handleDataChange = (data: TemplateData) => {
     setTemplateData(data);
   };
 
   const [showTemplate, setShowTemplate] = useState(false);
 
-  const handleGenerateTemplate = () => {
+  const handleGenerateTemplate = (data:TemplateData) => {
+    // Copy the current input data to finalData and show the template
+    setFinalData(data);
     setShowTemplate(true);
   };
 
@@ -58,7 +68,7 @@ const MainPage: React.FC = () => {
         <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-6 flex flex-col">
           {/* Template container with fixed height and scrollable if needed */}
           <div className="flex-1 overflow-auto mb-6">
-            <TemplatePage data={templateData} />
+            <TemplatePage data={finalData} />
           </div>
           
           {/* Buttons container - fixed at bottom */}
