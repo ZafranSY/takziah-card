@@ -5,7 +5,7 @@ import Image from "next/image";
 import TakziahLogo from "../../../public/logo1.svg"
 import ThemeToggle from "./ThemeToggle";
 
-interface TemplateData {
+interface TemplateData  {
   name: string;
   image: string;
   extraMessage: string;
@@ -24,7 +24,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ onDataChange }) => {
     image: "",
     extraMessage: "",
     language: "Malay", // Default language
-    boolExtraMessage: false, // Boolean, not string
+    boolExtraMessage: false,
     dateOfDeath: ""
   });
 
@@ -34,7 +34,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ onDataChange }) => {
   // Use useEffect to notify parent of initial state
   useEffect(() => {
     onDataChange(formData);
-  }, []);
+  }, [onDataChange, formData]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -44,26 +44,22 @@ const InputPanel: React.FC<InputPanelProps> = ({ onDataChange }) => {
         ...prevData,
         image: imageUrl
       }));
-      onDataChange({ ...formData, image: imageUrl });
     }
   };
   
   const handleLanguageSelect = (language: string) => {
     setFormData(prevData => ({ ...prevData, language }));
-    onDataChange({ ...formData, language });
     setIsOpen(false);
   };
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prevData => ({ ...prevData, [name]: value }));
-    onDataChange({ ...formData, [name]: value });
   };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
     setFormData(prevData => ({ ...prevData, [name]: checked }));
-    onDataChange({ ...formData, [name]: checked });
   };
 
   const handleDataSubmit = () => {
@@ -73,7 +69,6 @@ const InputPanel: React.FC<InputPanelProps> = ({ onDataChange }) => {
 
   const handleImageRemove = () => {
     setFormData(prevData => ({ ...prevData, image: "" }));
-    onDataChange({ ...formData, image: "" });
   };
 
   return (
@@ -105,7 +100,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ onDataChange }) => {
           <label className="block text-sm text-slate-600 dark:text-slate-300">Name:</label>
           <input
             type="text"
-            name="name" // Changed from dateOfDeath to name
+            name="name"
             value={formData.name}
             onChange={handleChange}
             className="w-full mt-3 p-3 h-10 rounded-lg text-slate-700 dark:text-white bg-white dark:bg-slate-800
