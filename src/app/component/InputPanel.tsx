@@ -5,45 +5,64 @@ import Image from "next/image";
 import TakziahLogo from "../../../public/logo1.svg"
 import ThemeToggle from "./ThemeToggle";
 
-const InputPanel = ({onDataSubmit}: {onDataSubmit : (data:any) =>void}) => {
+interface TemplateData{
+  name : string,
+  image:string,
+  extraMessage:string
+}
+interface InputPanelProps
+{
+onDataChange:( data: TemplateData) =>void;
+}
+const InputPanel:React.FC<InputPanelProps> =({ onDataChange})=> {
 
-  const [data, setData] = useState({
-    memorialName: "",
-    showExtraMessage: false,
-    selectedLanguage: "Malay",
-    selectedImage: null as string | null,
-    extraMessage: "",
+  const [FormData,setFormData] = useState<TemplateData>({
+    name:"",
+    image:"",
+    extraMessage:"",
   });
+
+  // const [data, setData] = useState({
+  //   memorialName: "",
+  //   showExtraMessage: false,
+  //   selectedLanguage: "Malay",
+  //   selectedImage: null as string | null,
+  //   extraMessage: "",
+  // });
   const [isOpen, setIsOpen] = useState(false);
 
   const languages = ["Malay", "English"];
-  const [showExtraMessage, setShowExtraMessage ] = useState(false);
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setData((prevData) => ({
-        ...prevData,
-        selectedImage: URL.createObjectURL(file),
-      }));    }
-  };
-  const handleInputChange = (
-    field: string,
-    value: string | boolean | null
-  ) => {
-    setData((prevData) => ({
-      ...prevData,
-      [field]: value,
-    }));
-  };
-  const handleDataSubmit = () => {
-    onDataSubmit({
-      image: data.selectedImage,
-      name: data.memorialName,
-      language: data.selectedLanguage,
-      extraMessage: data.showExtraMessage ? data.extraMessage : "",
-    });
-  };
+  // const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0];
+  //   if (file) {
+  //     setData((prevData) => ({
+  //       ...prevData,
+  //       selectedImage: URL.createObjectURL(file),
+  //     }));    }
+  // };
+  // const handleInputChange = (
+  //   field: string,
+  //   value: string | boolean | null
+  // ) => {
+  //   setData((prevData) => ({
+  //     ...prevData,
+  //     [field]: value,
+  //   }));
+  // };
+  // const handleDataSubmit = () => {
+  //   onDataSubmit({
+  //     image: data.selectedImage,
+  //     name: data.memorialName,
+  //     language: data.selectedLanguage,
+  //     extraMessage: data.showExtraMessage ? data.extraMessage : "",
+  //   });
+  // };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    onDataChange({ ...formData, [name]: value }); // Send updated data to parent
+  };
 
   return (
     <div className="fixed top-0 left-0 h-screen lg:w-1/3 m-0 flex flex-col w-full shadow-lg
