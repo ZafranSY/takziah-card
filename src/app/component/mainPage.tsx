@@ -2,6 +2,15 @@
 import React, { useState } from "react";
 import TemplatePage from "./TemplatePage";
 
+interface TemplateData{
+
+  name:string
+  image : string
+  extraMessage: string
+  language : string
+  boolExtraMessage :boolean
+  dataOfDeath : string
+}
 const MainPage = () => {
   const [showTemplate, setShowTemplate] = useState(false);
 
