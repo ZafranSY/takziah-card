@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import TemplatePage from "./TemplatePage";
-
+import InputPanel from "./InputPanel";
 interface TemplateData{
 
   name:string
@@ -9,9 +9,24 @@ interface TemplateData{
   extraMessage: string
   language : string
   boolExtraMessage :boolean
-  dataOfDeath : string
+  dateOfDeath : string
 }
-const MainPage = () => {
+
+const MainPage: React.FC = () => {
+
+
+  const [templateData, setTemplateData] = useState<TemplateData>({
+    name: "",
+    image: "",
+    extraMessage: "",
+    language: "Malay",
+    boolExtraMessage: false,
+    dateOfDeath: ""
+  });
+  const handleDataChange = (data: TemplateData) => {
+    setTemplateData(data);
+  };
+
   const [showTemplate, setShowTemplate] = useState(false);
 
   const handleGenerateTemplate = () => {
@@ -29,13 +44,21 @@ const MainPage = () => {
   };
 
   return (
+
+    <div className="bg-white dark:bg-gray-800 flex h-screen">  
+    <div className="w-1/4">
+    <InputPanel onDataChange = {handleDataChange} />
+
+    </div>
+    <div className="  w-3/4 mx-auto">
+      
     <div className="min-h-screen bg-gray-50 dark:bg-gray-800 p-4 flex justify-center">
       <div className="max-w-4xl mx-auto flex flex-col h-full">
         {/* Container for template and buttons */}
         <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-6 flex flex-col">
           {/* Template container with fixed height and scrollable if needed */}
           <div className="flex-1 overflow-auto mb-6">
-            <TemplatePage />
+            <TemplatePage data={templateData} />
           </div>
           
           {/* Buttons container - fixed at bottom */}
@@ -56,6 +79,11 @@ const MainPage = () => {
         </div>
       </div>
     </div>
+    </div>
+
+    </div>
+
+   
   );
 };
 
