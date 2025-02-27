@@ -57,7 +57,9 @@ const MainPage: React.FC = () => {
   
     try {
       const originalStyle = templateRef.current.style.cssText;
-  
+
+      templateRef.current.style.height = "auto";
+      templateRef.current.style.overflow = "visible";
       const canvas = await html2canvas(templateRef.current, {
         backgroundColor: null,
         scale: 2,
