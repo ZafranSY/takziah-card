@@ -10,14 +10,7 @@ interface TemplateData {
 }
 
 export default function Home() {
-  const [templateData, setTemplateData] = useState<TemplateData>({
-    name: "",
-    image: "/api/placeholder/400/400",
-    from: ""
-  });
-  const handleDataChange = (data: TemplateData) => {
-    setTemplateData(data);
-  };
+
   return (
   <main>
     <MainPage/>
