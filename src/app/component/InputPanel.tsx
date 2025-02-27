@@ -20,6 +20,8 @@ interface InputPanelProps {
 }
 
 const InputPanel: React.FC<InputPanelProps> = ({ onDataChange, onGenerateCard }) => {
+
+  
   const [formData, setFormData] = useState<TemplateData>({
     name: "",
     image: "",
@@ -28,7 +30,9 @@ const InputPanel: React.FC<InputPanelProps> = ({ onDataChange, onGenerateCard })
     boolExtraMessage: false,
     dateOfDeath: ""
   });
-
+  useEffect(() => {
+    // Your logic here
+  }, [formData, onDataChange]);
   const [isOpen, setIsOpen] = useState(false);
   const languages = ["Malay", "English"];
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -123,7 +127,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ onDataChange, onGenerateCard })
       <div className="relative w-full bg-white/80 dark:bg-slate-800/80 p-6 backdrop-blur-sm border-b border-slate-200 dark:border-slate-700">
         <div className="flex items-center space-x-4 justify-between">
           <div className="flex items-center gap-3">
-            <Image src={TakziahLogo} alt="takziah logo" width={30} height={30} className="dark:invert" />
+            <img src={TakziahLogo} alt="takziah logo" width={30} height={30} className="dark:invert" />
             <h1 className="text-2xl font-semibold tracking-wide bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent">
               Takziah Card
             </h1>
