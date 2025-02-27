@@ -77,7 +77,9 @@ const TemplatePage: React.FC<TemplatePageProps> = ({ data }) => {
           {/* Image */}
           <div className="w-48 h-48 mx-auto my-8 rounded-full overflow-hidden">
             {data.image ? (
-              <Image
+              /* eslint-disable-next-line @next/next/no-img-element */
+
+              <img
                 src={data.image}
                 alt="Memorial"
                 className="w-full h-full object-cover grayscale"

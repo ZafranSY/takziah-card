@@ -56,9 +56,11 @@ const InputPanel: React.FC<InputPanelProps> = ({ onDataChange, onGenerateCard })
     
       const blob = await response.blob();
       return URL.createObjectURL(blob);
-    } catch (error) {
-      console.error("Background removal failed:", error);
-      throw error;
+    } catch {
+      console.error("Background removal failed");
+      const imageUrl = URL.createObjectURL(file);
+
+      return imageUrl;
     }
   }
   
@@ -71,9 +73,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ onDataChange, onGenerateCard })
           ...prevData,
           image: processedImageURL
         }));
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-
-      } catch(error) {
+      } catch {
         console.error("Background removal failed");
         const imageUrl = URL.createObjectURL(file);
 
@@ -170,7 +170,8 @@ const InputPanel: React.FC<InputPanelProps> = ({ onDataChange, onGenerateCard })
             />
             {formData.image ? (
               <div className="relative h-full">
-                {/* Using img tag for blob URLs */}
+                {/* Using img tag for blob URLs to handle dynamic images */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={formData.image}
                   alt="Preview"
