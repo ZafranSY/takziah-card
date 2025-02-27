@@ -54,44 +54,46 @@ const MainPage: React.FC = () => {
 
   const handleDownload = async () => {
     if (!templateRef.current) return;
-    
+  
     try {
-      // Show loading state if needed
-      
-      // Capture the template as an image
+      const originalStyle = templateRef.current.style.cssText;
+  
       const canvas = await html2canvas(templateRef.current, {
-        backgroundColor: "#000000", // Black background
-        scale: 2, // Higher quality
-        logging: false,
-        useCORS: true // To handle cross-origin images
+        backgroundColor: null,
+        scale: 2,
+        useCORS: true,
+        allowTaint: false,
       });
-      const context = canvas.getContext('2d');
-    if (context) {
-      // Save the current state
-      context.save();
-      // Apply grayscale filter
-      context.filter = 'grayscale(100%)';
-      // Draw the canvas back onto itself with the filter
+  
+      const newCanvas = document.createElement("canvas");
+      newCanvas.width = canvas.width;
+      newCanvas.height = canvas.height;
+  
+      const context = newCanvas.getContext("2d");
+      if (!context) {
+        console.error("Could not get 2D context");
+        return;
+      }
+  
       context.drawImage(canvas, 0, 0);
-      // Restore the state
-      context.restore();
-    }
-      // Convert to data URL
-      const image = canvas.toDataURL("image/jpeg", 0.9);
-      
-      // Create download link
+  
+      const image = newCanvas.toDataURL("image/jpeg", 1.0);
+  
       const link = document.createElement("a");
       link.href = image;
       link.download = `${finalData.name || "takziah-card"}.jpg`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      
+  
+      templateRef.current.style.cssText = originalStyle;
     } catch (error) {
       console.error("Error downloading image:", error);
       alert("There was an error generating the download. Please try again.");
     }
   };
+  
+  
 
   const handleReset = () => {
     // Reset both form and displayed data
