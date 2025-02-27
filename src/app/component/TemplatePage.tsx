@@ -46,22 +46,22 @@ const TemplatePage: React.FC<TemplatePageProps> = ({ data }) => {
     <div className="w-full min-h-screen bg-black flex justify-center items-center p-4">
       <div className="max-w-2xl w-full bg-black text-white text-center p-6">
         {/* Header Logo */}
-        <div className="mb-6">
+        <div className="mb-4">
           {/* Arabic Text */}
           <div className={amiri.className}>
-            <h1 className="text-4xl mb-8 text-amber-400">
+            <h1 className="text-4xl mb-6 text-amber-400">
               إِنَّا لِلَّٰهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ
             </h1>
           </div>
         </div>
 
         {/* Main Content */}
-        <div className="space-y-4">
+        <div className="space-y-3">
           <h2 className="text-xl font-semibold">{text.title}</h2>
           <p className="text-sm">{text.subtitle}</p>
           
           {/* Divider */}
-          <div className="w-3/4 h-px bg-white mx-auto my-6"></div>
+          <div className="w-3/4 h-px bg-white mx-auto my-4"></div>
           
           {/* Name */}
           <h3 className="text-xl font-bold px-8">
@@ -69,12 +69,12 @@ const TemplatePage: React.FC<TemplatePageProps> = ({ data }) => {
           </h3>
           
           {/* Prayer */}
-          <p className="text-sm px-12 my-6">
+          <p className="text-sm px-12 my-4">
             {text.message}
           </p>
           
-          {/* Image */}
-          <div className="w-48 h-48 mx-auto my-8 rounded-full overflow-hidden">
+          {/* Image - REDUCED HEIGHT HERE */}
+          <div className="w-32 h-32 mx-auto my-4 rounded-full overflow-hidden">
             {data.image ? (
                 /* eslint-disable-next-line @next/next/no-img-element */
               <img
@@ -85,24 +85,24 @@ const TemplatePage: React.FC<TemplatePageProps> = ({ data }) => {
               />
             ) : (
               <div className="w-full h-full bg-gray-700 flex items-center justify-center">
-                <span className="text-sm text-gray-400">No image selected</span>
+                <span className="text-xs text-gray-400">No image</span>
               </div>
             )}
           </div>
           
           {/* Extra Message if enabled */}
           {data.boolExtraMessage && data.extraMessage && (
-            <div className="my-6 px-8">
+            <div className="my-4 px-8">
               <p className="text-sm italic">{data.extraMessage}</p>
             </div>
           )}
           
           {/* Divider */}
-          <div className="w-3/4 h-px bg-white mx-auto my-6"></div>
+          <div className="w-3/4 h-px bg-white mx-auto my-4"></div>
           
           {/* Footer */}
-          <div className="mt-6">
-            <p className="text-sm mb-2">{text.date}</p>
+          <div className="mt-4">
+            <p className="text-sm mb-1">{text.date}</p>
             <p className="text-lg font-semibold px-8">
               {data.dateOfDeath || "Date will appear here"}
             </p>
