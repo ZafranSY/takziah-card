@@ -71,6 +71,8 @@ const InputPanel: React.FC<InputPanelProps> = ({ onDataChange, onGenerateCard })
           ...prevData,
           image: processedImageURL
         }));
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
       } catch(error) {
         console.error("Background removal failed");
         const imageUrl = URL.createObjectURL(file);

@@ -25,6 +25,7 @@ const MainPage: React.FC = () => {
   };
   
   // Current form data state (updated by InputPanel)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currentData, setCurrentData] = useState<TemplateData>(initialData);
   
   // Data to display in the template (only updated when Generate Card is clicked)
