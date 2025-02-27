@@ -23,15 +23,8 @@ export default function Home() {
     setTemplateData(data);
   };
   return (
-    <div className="bg-white dark:bg-gray-800 flex h-screen">  
-    <div className="w-1/4">
-    <InputPanel onDataChange = {handleDataChange} />
-
-    </div>
-    <div className="  w-3/4 mx-auto">
-      <MainPage/>
-    </div>
-
-    </div>
+  <main>
+    <MainPage/>
+  </main>
   );
 }
