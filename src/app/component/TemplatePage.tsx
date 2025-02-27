@@ -2,7 +2,6 @@
 
 import React from "react";
 import { Amiri } from "next/font/google";
-import Image from "next/image";
 
 const amiri = Amiri({
   subsets: ['arabic'],
@@ -77,8 +76,7 @@ const TemplatePage: React.FC<TemplatePageProps> = ({ data }) => {
           {/* Image */}
           <div className="w-48 h-48 mx-auto my-8 rounded-full overflow-hidden">
             {data.image ? (
-              /* eslint-disable-next-line @next/next/no-img-element */
-
+                /* eslint-disable-next-line @next/next/no-img-element */
               <img
                 src={data.image}
                 alt="Memorial"
