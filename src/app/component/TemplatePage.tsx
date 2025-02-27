@@ -77,7 +77,7 @@ const TemplatePage: React.FC<TemplatePageProps> = ({ data }) => {
           {/* Image */}
           <div className="w-48 h-48 mx-auto my-8 rounded-full overflow-hidden">
             {data.image ? (
-              <img
+              <Image
                 src={data.image}
                 alt="Memorial"
                 className="w-full h-full object-cover grayscale"
