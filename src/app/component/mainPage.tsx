@@ -23,9 +23,6 @@ const MainPage: React.FC = () => {
     boolExtraMessage: false,
     dateOfDeath: ""
   };
-
-  // Data currently in the form
-  const [templateData, setTemplateData] = useState<TemplateData>(initialData);
   
   // Data to display in the template (only updated when Generate Card is clicked)
   const [finalData, setFinalData] = useState<TemplateData>(initialData);
@@ -37,7 +34,7 @@ const MainPage: React.FC = () => {
   const templateRef = useRef<HTMLDivElement>(null);
 
   const handleDataChange = (data: TemplateData) => {
-    setTemplateData(data);
+    // This function is used by InputPanel
   };
 
   const handleGenerateTemplate = (data: TemplateData) => {
@@ -83,7 +80,6 @@ const MainPage: React.FC = () => {
 
   const handleReset = () => {
     // Reset both form and displayed data
-    setTemplateData(initialData);
     setFinalData(initialData);
     // Return to input panel on mobile
     setShowInputPanel(true);
@@ -135,12 +131,6 @@ const MainPage: React.FC = () => {
               
               {/* Buttons container - fixed at bottom */}
               <div className="flex justify-center gap-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                {/* <button
-                  onClick={() => handleGenerateTemplate(templateData)}
-                  className="bg-blue-600 text-white py-2 px-6 rounded-lg shadow-md hover:bg-blue-700 transition-colors"
-                >
-                  Update Preview
-                </button> */}
                 <button
                   onClick={handleDownload}
                   className="bg-green-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-green-600 transition-colors"
