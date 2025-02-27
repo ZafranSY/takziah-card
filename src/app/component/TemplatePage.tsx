@@ -43,40 +43,40 @@ const TemplatePage: React.FC<TemplatePageProps> = ({ data }) => {
   const text = getLocalizedText();
   
   return (
-    <div className="w-full min-h-screen bg-black flex justify-center items-center p-4">
-      <div className="max-w-2xl w-full bg-black text-white text-center p-6">
+    <div className="w-full bg-black flex justify-center items-center p-8">
+      <div className="max-w-4xl w-full bg-black text-white text-center p-12 pb-16">
         {/* Header Logo */}
-        <div className="mb-4">
+        <div className="mb-8 pt-8">
           {/* Arabic Text */}
           <div className={amiri.className}>
-            <h1 className="text-4xl mb-6 text-amber-400">
+            <h1 className="text-4xl mb-12 text-amber-400">
               إِنَّا لِلَّٰهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ
             </h1>
           </div>
         </div>
 
         {/* Main Content */}
-        <div className="space-y-3">
-          <h2 className="text-xl font-semibold">{text.title}</h2>
-          <p className="text-sm">{text.subtitle}</p>
+        <div className="space-y-6">
+          <h2 className="text-2xl font-semibold">{text.title}</h2>
+          <p className="text-lg">{text.subtitle}</p>
           
           {/* Divider */}
-          <div className="w-3/4 h-px bg-white mx-auto my-4"></div>
+          <div className="w-3/4 h-px bg-white mx-auto my-8"></div>
           
           {/* Name */}
-          <h3 className="text-xl font-bold px-8">
+          <h3 className="text-2xl font-bold px-8 py-2">
             {data.name || "Name will appear here"}
           </h3>
           
           {/* Prayer */}
-          <p className="text-sm px-12 my-4">
+          <p className="text-lg px-12 my-8">
             {text.message}
           </p>
           
-          {/* Image - REDUCED HEIGHT HERE */}
-          <div className="w-32 h-32 mx-auto my-4 rounded-full overflow-hidden">
+          {/* Image */}
+          <div className="w-48 h-48 mx-auto my-12 rounded-full overflow-hidden">
             {data.image ? (
-                /* eslint-disable-next-line @next/next/no-img-element */
+              /* eslint-disable-next-line @next/next/no-img-element */
               <img
                 src={data.image}
                 alt="Memorial"
@@ -85,25 +85,25 @@ const TemplatePage: React.FC<TemplatePageProps> = ({ data }) => {
               />
             ) : (
               <div className="w-full h-full bg-gray-700 flex items-center justify-center">
-                <span className="text-xs text-gray-400">No image</span>
+                <span className="text-sm text-gray-400">No image selected</span>
               </div>
             )}
           </div>
           
           {/* Extra Message if enabled */}
           {data.boolExtraMessage && data.extraMessage && (
-            <div className="my-4 px-8">
-              <p className="text-sm italic">{data.extraMessage}</p>
+            <div className="my-8 px-8">
+              <p className="text-lg italic">{data.extraMessage}</p>
             </div>
           )}
           
           {/* Divider */}
-          <div className="w-3/4 h-px bg-white mx-auto my-4"></div>
+          <div className="w-3/4 h-px bg-white mx-auto my-8"></div>
           
           {/* Footer */}
-          <div className="mt-4">
-            <p className="text-sm mb-1">{text.date}</p>
-            <p className="text-lg font-semibold px-8">
+          <div className="mt-8 mb-8">
+            <p className="text-lg mb-2">{text.date}</p>
+            <p className="text-xl font-semibold px-8 py-2">
               {data.dateOfDeath || "Date will appear here"}
             </p>
           </div>
