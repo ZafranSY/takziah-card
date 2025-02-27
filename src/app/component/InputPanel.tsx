@@ -20,8 +20,6 @@ interface InputPanelProps {
 }
 
 const InputPanel: React.FC<InputPanelProps> = ({ onDataChange, onGenerateCard }) => {
-
-  
   const [formData, setFormData] = useState<TemplateData>({
     name: "",
     image: "",
@@ -30,54 +28,58 @@ const InputPanel: React.FC<InputPanelProps> = ({ onDataChange, onGenerateCard })
     boolExtraMessage: false,
     dateOfDeath: ""
   });
-useEffect(() => {
-  // Your logic here
-}, [formData, onDataChange]);
+  
+  useEffect(() => {
+    // Sync data with parent component
+    onDataChange(formData);
+  }, [formData, onDataChange]);
+  
   const [isOpen, setIsOpen] = useState(false);
   const languages = ["Malay", "English"];
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
   async function removeBackground(file: File): Promise<string>{
     const formData = new FormData();
     formData.append("image_file", file);
 
-    const response = await fetch("https://api.remove.bg/v1.0/removebg",{
-      method:"POST",
-      headers:{
-      "X-Api-key":"fLSptCTyQHXLSVw1sHuBvpyG"
-      },
-      body:formData
-    });
-    if (!response.ok) {
-      throw new Error("Background removal failed");
+    try {
+      const response = await fetch("https://api.remove.bg/v1.0/removebg",{
+        method:"POST",
+        headers:{
+        "X-Api-key":"fLSptCTyQHXLSVw1sHuBvpyG"
+        },
+        body:formData
+      });
+      
+      if (!response.ok) {
+        throw new Error("Background removal failed");
+      }
+    
+      const blob = await response.blob();
+      return URL.createObjectURL(blob);
+    } catch (error) {
+      console.error("Background removal failed:", error);
+      throw error;
     }
-  
-    const blob = await response.blob();
-    return URL.createObjectURL(blob);
   }
+  
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // setSelectedImage(file);
-      // const imageUrl = URL.createObjectURL(file);
+      try{
+        const processedImageURL = await removeBackground(file);
+        setFormData(prevData => ({
+          ...prevData,
+          image: processedImageURL
+        }));
+      } catch(error) {
+        console.error("Background removal failed");
+        const imageUrl = URL.createObjectURL(file);
 
-    try{
-      const processedImageURL = await removeBackground(file);
-      setFormData(prevData => ({
-        ...prevData,
-        image: processedImageURL
-      }));
-    }catch(error)
-    {
-      console.error("Background removal fail");
-      setSelectedImage(file);
-      const imageUrl = URL.createObjectURL(file);
-
-      setFormData(prevData => ({
-        ...prevData,
-        image: imageUrl
-      }));
-    }
+        setFormData(prevData => ({
+          ...prevData,
+          image: imageUrl
+        }));
+      }
     }
   };
   
@@ -104,17 +106,8 @@ useEffect(() => {
   };
 
   const handleImageRemove = () => {
-    setSelectedImage(null);
     setFormData(prevData => ({ ...prevData, image: "" }));
   };
-
-  // Reset when returning to InputPanel from TemplatePage on small screens
-  useEffect(() => {
-    const syncData = () => {
-      onDataChange(formData);
-    };
-    syncData();
-  }, []);
 
   return (
     <div className="fixed top-0 left-0 h-screen lg:w-1/3 m-0 flex flex-col w-full shadow-lg
@@ -175,7 +168,7 @@ useEffect(() => {
             />
             {formData.image ? (
               <div className="relative h-full">
-                {/* Replace Image component with regular img tag for blob URLs */}
+                {/* Using img tag for blob URLs */}
                 <img
                   src={formData.image}
                   alt="Preview"

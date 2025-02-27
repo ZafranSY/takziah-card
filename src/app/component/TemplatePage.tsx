@@ -1,6 +1,9 @@
+"use client";
+
 import React from "react";
 import { Amiri } from "next/font/google";
 import Image from "next/image";
+
 const amiri = Amiri({
   subsets: ['arabic'],
   weight: ['400', '700'],
@@ -45,10 +48,6 @@ const TemplatePage: React.FC<TemplatePageProps> = ({ data }) => {
       <div className="max-w-2xl w-full bg-black text-white text-center p-6">
         {/* Header Logo */}
         <div className="mb-6">
-          <div className="w-16 h-16 mx-auto mb-4">
-         
-          </div>
-          
           {/* Arabic Text */}
           <div className={amiri.className}>
             <h1 className="text-4xl mb-8 text-amber-400">
@@ -78,7 +77,7 @@ const TemplatePage: React.FC<TemplatePageProps> = ({ data }) => {
           {/* Image */}
           <div className="w-48 h-48 mx-auto my-8 rounded-full overflow-hidden">
             {data.image ? (
-              <Image
+              <img
                 src={data.image}
                 alt="Memorial"
                 className="w-full h-full object-cover grayscale"

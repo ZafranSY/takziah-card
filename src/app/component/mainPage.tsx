@@ -24,6 +24,9 @@ const MainPage: React.FC = () => {
     dateOfDeath: ""
   };
   
+  // Current form data state (updated by InputPanel)
+  const [currentData, setCurrentData] = useState<TemplateData>(initialData);
+  
   // Data to display in the template (only updated when Generate Card is clicked)
   const [finalData, setFinalData] = useState<TemplateData>(initialData);
   
@@ -34,7 +37,8 @@ const MainPage: React.FC = () => {
   const templateRef = useRef<HTMLDivElement>(null);
 
   const handleDataChange = (data: TemplateData) => {
-    // This function is used by InputPanel
+    // Update the current data as user types
+    setCurrentData(data);
   };
 
   const handleGenerateTemplate = (data: TemplateData) => {
@@ -80,6 +84,7 @@ const MainPage: React.FC = () => {
 
   const handleReset = () => {
     // Reset both form and displayed data
+    setCurrentData(initialData);
     setFinalData(initialData);
     // Return to input panel on mobile
     setShowInputPanel(true);
