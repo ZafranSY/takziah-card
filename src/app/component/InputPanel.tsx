@@ -42,20 +42,24 @@ const InputPanel: React.FC<InputPanelProps> = ({ onDataChange, onGenerateCard })
     formData.append("image_file", file);
 
     try {
-      const response = await fetch("https://api.remove.bg/v1.0/removebg",{
-        method:"POST",
-        headers:{
-        "X-Api-key":"fLSptCTyQHXLSVw1sHuBvpyG"
-        },
-        body:formData
-      });
+      // const response = await fetch("https://api.remove.bg/v1.0/removebg",{
+      //   method:"POST",
+      //   headers:{
+      //   "X-Api-key":"fLSptCTyQHXLSVw1sHuBvpyG"
+      //   },
+      //   body:formData
+      // });
       
-      if (!response.ok) {
-        throw new Error("Background removal failed");
-      }
+      // if (!response.ok) {
+      //   throw new Error("Background removal failed");
+      // }
     
-      const blob = await response.blob();
-      return URL.createObjectURL(blob);
+      // const blob = await response.blob();
+      // return URL.createObjectURL(blob);
+      console.error("Background removal failed");
+      const imageUrl = URL.createObjectURL(file);
+
+      return imageUrl;
     } catch {
       console.error("Background removal failed");
       const imageUrl = URL.createObjectURL(file);
