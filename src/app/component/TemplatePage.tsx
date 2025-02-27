@@ -1,6 +1,6 @@
 import React from "react";
 import { Amiri } from "next/font/google";
-
+import Image from "next/image";
 const amiri = Amiri({
   subsets: ['arabic'],
   weight: ['400', '700'],
@@ -78,7 +78,7 @@ const TemplatePage: React.FC<TemplatePageProps> = ({ data }) => {
           {/* Image */}
           <div className="w-48 h-48 mx-auto my-8 rounded-full overflow-hidden">
             {data.image ? (
-              <img
+              <Image
                 src={data.image}
                 alt="Memorial"
                 className="w-full h-full object-cover grayscale"
@@ -94,7 +94,7 @@ const TemplatePage: React.FC<TemplatePageProps> = ({ data }) => {
           {/* Extra Message if enabled */}
           {data.boolExtraMessage && data.extraMessage && (
             <div className="my-6 px-8">
-              <p className="text-sm italic">"{data.extraMessage}"</p>
+              <p className="text-sm italic">{data.extraMessage}</p>
             </div>
           )}
           
