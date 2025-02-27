@@ -65,7 +65,17 @@ const MainPage: React.FC = () => {
         logging: false,
         useCORS: true // To handle cross-origin images
       });
-      
+      const context = canvas.getContext('2d');
+    if (context) {
+      // Save the current state
+      context.save();
+      // Apply grayscale filter
+      context.filter = 'grayscale(100%)';
+      // Draw the canvas back onto itself with the filter
+      context.drawImage(canvas, 0, 0);
+      // Restore the state
+      context.restore();
+    }
       // Convert to data URL
       const image = canvas.toDataURL("image/jpeg", 0.9);
       
