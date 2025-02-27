@@ -16,9 +16,10 @@ interface TemplateData  {
 
 interface InputPanelProps {
   onDataChange: (data: TemplateData) => void;
+  onGenerateCard: (data: TemplateData) => void;
 }
 
-const InputPanel: React.FC<InputPanelProps> = ({ onDataChange }) => {
+const InputPanel: React.FC<InputPanelProps> = ({ onDataChange, onGenerateCard }) => {
   const [formData, setFormData] = useState<TemplateData>({
     name: "",
     image: "",
@@ -30,20 +31,49 @@ const InputPanel: React.FC<InputPanelProps> = ({ onDataChange }) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const languages = ["Malay", "English"];
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
-  // Use useEffect to notify parent of initial state
-  useEffect(() => {
-    onDataChange(formData);
-  }, [onDataChange, formData]);
+  async function removeBackground(file: File): Promise<string>{
+    const formData = new FormData();
+    formData.append("image_file", file);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const response = await fetch("https://api.remove.bg/v1.0/removebg",{
+      method:"POST",
+      headers:{
+      "X-Api-key":"fLSptCTyQHXLSVw1sHuBvpyG"
+      },
+      body:formData
+    });
+    if (!response.ok) {
+      throw new Error("Background removal failed");
+    }
+  
+    const blob = await response.blob();
+    return URL.createObjectURL(blob);
+  }
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // setSelectedImage(file);
+      // const imageUrl = URL.createObjectURL(file);
+
+    try{
+      const processedImageURL = await removeBackground(file);
+      setFormData(prevData => ({
+        ...prevData,
+        image: processedImageURL
+      }));
+    }catch(error)
+    {
+      console.error("Background removal fail");
+      setSelectedImage(file);
       const imageUrl = URL.createObjectURL(file);
+
       setFormData(prevData => ({
         ...prevData,
         image: imageUrl
       }));
+    }
     }
   };
   
@@ -63,13 +93,24 @@ const InputPanel: React.FC<InputPanelProps> = ({ onDataChange }) => {
   };
 
   const handleDataSubmit = () => {
-    // Final submission of data to parent component
+    // Update parent component with current data
     onDataChange(formData);
+    // Generate card with current data
+    onGenerateCard(formData);
   };
 
   const handleImageRemove = () => {
+    setSelectedImage(null);
     setFormData(prevData => ({ ...prevData, image: "" }));
   };
+
+  // Reset when returning to InputPanel from TemplatePage on small screens
+  useEffect(() => {
+    const syncData = () => {
+      onDataChange(formData);
+    };
+    syncData();
+  }, []);
 
   return (
     <div className="fixed top-0 left-0 h-screen lg:w-1/3 m-0 flex flex-col w-full shadow-lg
@@ -130,6 +171,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ onDataChange }) => {
             />
             {formData.image ? (
               <div className="relative h-full">
+                {/* Replace Image component with regular img tag for blob URLs */}
                 <img
                   src={formData.image}
                   alt="Preview"
