@@ -30,9 +30,9 @@ const InputPanel: React.FC<InputPanelProps> = ({ onDataChange, onGenerateCard })
     boolExtraMessage: false,
     dateOfDeath: ""
   });
-  useEffect(() => {
-    // Your logic here
-  }, [formData, onDataChange]);
+useEffect(() => {
+  // Your logic here
+}, [formData, onDataChange]);
   const [isOpen, setIsOpen] = useState(false);
   const languages = ["Malay", "English"];
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
