@@ -23,18 +23,18 @@ const MainPage: React.FC = () => {
     dateOfDeath: "",
   };
 
-  // We only keep finalData
+  // Removed currentData state since it's not used.
   const [finalData, setFinalData] = useState<TemplateData>(initialData);
   const [showInputPanel, setShowInputPanel] = useState(true);
 
   const templateRef = useRef<HTMLDivElement>(null);
 
-  // We can pass an empty function to onDataChange if needed
-  const handleDataChange = (data: TemplateData) => {
-    // No-op or remove entirely if not needed
+  // Since handleDataChange is not needed, we pass a no-op.
+  const handleDataChange = (_data: TemplateData) => {
+    // No-op
   };
 
-  // The "Generate Card" button sets finalData for display & download
+  // When "Generate Card" is clicked, update finalData.
   const handleGenerateTemplate = (data: TemplateData) => {
     setFinalData({ ...data });
     if (window.innerWidth < 1024) {
@@ -45,7 +45,7 @@ const MainPage: React.FC = () => {
   const handleDownload = async () => {
     if (!templateRef.current) return;
     try {
-      // Save current inline styles
+      // Save current inline styles and remove constraints
       const originalStyle = templateRef.current.style.cssText;
       templateRef.current.style.height = "auto";
       templateRef.current.style.overflow = "visible";
@@ -58,9 +58,9 @@ const MainPage: React.FC = () => {
         allowTaint: false,
       });
 
-      // Optional: If you do grayscale processing, keep that code here.
-      // For brevity, we'll skip it. If you still want it, re-add your code.
-      
+      // (Optional) Grayscale processing code could go here
+
+      // Convert canvas to image and trigger download
       const image = canvas.toDataURL("image/jpeg", 1.0);
       const link = document.createElement("a");
       link.href = image;
@@ -69,7 +69,7 @@ const MainPage: React.FC = () => {
       link.click();
       document.body.removeChild(link);
 
-      // Restore the original styles
+      // Restore original styles
       templateRef.current.style.cssText = originalStyle;
     } catch (error) {
       console.error("Error downloading image:", error);
@@ -95,12 +95,7 @@ const MainPage: React.FC = () => {
       >
         {showInputPanel ? (
           // Eye icon
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -109,39 +104,25 @@ const MainPage: React.FC = () => {
                  M2.458 12C3.732 7.943 7.523 5 
                  12 5c4.478 0 8.268 2.943 
                  9.542 7-1.274 4.057-5.064 
-                 7-9.542 7-4.477 0-8.268
-                 -2.943-9.542-7z"
+                 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
             />
           </svg>
         ) : (
           // Pencil icon
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth={2}
               d="M15.232 5.232l3.536 3.536
-                 m-2.036-5.036a2.5 2.5 
-                 0 113.536 3.536
-                 L6.5 21.036H3v-3.572
-                 L16.732 3.732z"
+                 m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
             />
           </svg>
         )}
       </button>
 
       {/* Input Panel */}
-      <div
-        className={`
-          ${showInputPanel ? "flex" : "hidden"}
-          lg:flex lg:w-1/3 w-full h-screen
-        `}
-      >
+      <div className={`${showInputPanel ? "flex" : "hidden"} lg:flex lg:w-1/3 w-full h-screen`}>
         <InputPanel
           onDataChange={handleDataChange}
           onGenerateCard={handleGenerateTemplate}
@@ -149,12 +130,7 @@ const MainPage: React.FC = () => {
       </div>
 
       {/* Template Preview */}
-      <div
-        className={`
-          ${!showInputPanel ? "flex" : "hidden"}
-          lg:flex lg:w-2/3 w-full h-screen overflow-auto
-        `}
-      >
+      <div className={`${!showInputPanel ? "flex" : "hidden"} lg:flex lg:w-2/3 w-full h-screen overflow-auto`}>
         <div className="max-h-screen w-full bg-gray-100 dark:bg-gray-800 p-4 flex justify-center">
           <div className="max-w-4xl w-full mx-auto flex flex-col h-full justify-center items-center">
             <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-6 flex flex-col min-h-screen justify-center items-center">
