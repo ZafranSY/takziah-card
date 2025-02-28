@@ -29,8 +29,8 @@ const MainPage: React.FC = () => {
 
   const templateRef = useRef<HTMLDivElement>(null);
 
-  // Since handleDataChange is not needed, we pass a no-op.
-  const handleDataChange = (_data: TemplateData) => {
+  // Fix for ESLint error: remove unused parameter
+  const handleDataChange = () => {
     // No-op
   };
 
