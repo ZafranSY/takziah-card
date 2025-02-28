@@ -4,8 +4,8 @@ import React from "react";
 import { Amiri } from "next/font/google";
 
 const amiri = Amiri({
-  subsets: ['arabic'],
-  weight: ['400', '700'],
+  subsets: ["arabic"],
+  weight: ["400", "700"],
 });
 
 interface TemplateData {
@@ -22,92 +22,124 @@ interface TemplatePageProps {
 }
 
 const TemplatePage: React.FC<TemplatePageProps> = ({ data }) => {
+  // Localized text
   const getLocalizedText = () => {
     if (data.language === "Malay") {
       return {
         title: "Takziah",
         subtitle: "Dengan penuh kesedihan, kami mengumumkan pemergian",
         date: "Tarikh Kematian",
-        message: "Semoga Allah mencucuri rahmat ke atas roh beliau"
+        message: "Semoga Allah mencucuri rahmat ke atas roh beliau",
       };
     } else {
       return {
         title: "Condolences",
         subtitle: "With great sadness, we announce the passing of",
         date: "Date of Death",
-        message: "May their soul rest in peace"
+        message: "May their soul rest in peace",
       };
     }
   };
-  
-  const text = getLocalizedText();
-  
-  return (
-    <div className="w-full bg-black flex justify-center items-center p-8">
-      <div className="max-w-4xl w-full bg-black text-white text-center p-12 pb-16">
-        {/* Header Logo */}
-        <div className="mb-8 pt-8">
-          {/* Arabic Text */}
-          <div className={amiri.className}>
-            <h1 className="text-4xl mb-12 text-amber-400">
-              إِنَّا لِلَّٰهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ
-            </h1>
-          </div>
-        </div>
 
-        {/* Main Content */}
-        <div className="space-y-6">
-          <h2 className="text-2xl font-semibold">{text.title}</h2>
-          <p className="text-lg">{text.subtitle}</p>
-          
-          {/* Divider */}
-          <div className="w-3/4 h-px bg-white mx-auto my-8"></div>
-          
-          {/* Name */}
-          <h3 className="text-2xl font-bold px-8 py-2">
-            {data.name || "Name will appear here"}
-          </h3>
-          
-          {/* Prayer */}
-          <p className="text-lg px-12 my-8">
-            {text.message}
-          </p>
-          
-          {/* Image */}
-          <div className="w-48 h-48 mx-auto my-12 rounded-full overflow-hidden">
-            {data.image ? (
-              /* eslint-disable-next-line @next/next/no-img-element */
-              <img
-                src={data.image}
-                alt="Memorial"
-                className="w-full h-full object-cover grayscale"
-                style={{ filter: "grayscale(100%)" }}
-              />
-            ) : (
-              <div className="w-full h-full bg-gray-700 flex items-center justify-center">
-                <span className="text-sm text-gray-400">No image selected</span>
-              </div>
-            )}
+  const text = getLocalizedText();
+
+  return (
+    <div
+      className={`
+        w-full
+        /* On mobile: up to 24rem wide; sm: up to 28rem; md: up to 36rem. */
+        max-w-sm
+        sm:max-w-md
+        md:max-w-xl
+        mx-auto
+
+        bg-black
+        text-white
+        rounded-md
+        shadow-md
+        p-4
+        sm:p-8
+        flex
+        flex-col
+        items-center
+
+        /* On mobile, clamp height so card + buttons fit.
+           On desktop (md+), remove that limit and set a min height so it’s bigger. */
+        max-h-[calc(100vh-120px)]
+        md:max-h-none
+        md:min-h-[700px]
+        overflow-auto
+      `}
+    >
+      <div className={amiri.className}>
+        <h1 className="text-xl sm:text-3xl mb-4 text-amber-400 text-center">
+          إِنَّا لِلَّٰهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ
+        </h1>
+      </div>
+
+      {/* Title / Subtitle */}
+      <h2 className="text-base sm:text-2xl font-semibold text-center">
+        {text.title}
+      </h2>
+      <p className="text-sm sm:text-lg mt-1 sm:mt-2 text-center">
+        {text.subtitle}
+      </p>
+
+      {/* Divider */}
+      <div className="w-3/4 h-px bg-white mx-auto my-2 sm:my-4" />
+
+      {/* Name */}
+      <h3 className="text-sm sm:text-xl font-bold px-2 sm:px-4 py-1 text-center">
+        {data.name || "Name will appear here"}
+      </h3>
+
+      {/* Prayer */}
+      <p className="text-xs sm:text-lg px-4 sm:px-8 my-2 sm:my-4 text-center">
+        {text.message}
+      </p>
+
+      {/* Image */}
+      <div
+        className="
+          w-20 h-20
+          sm:w-32 sm:h-32
+          mx-auto
+          my-2 sm:my-4
+          rounded-full
+          overflow-hidden
+        "
+      >
+        {data.image ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={data.image}
+            alt="Memorial"
+            className="w-full h-full object-cover"
+            style={{ filter: "grayscale(100%)" }}
+          />
+        ) : (
+          <div className="w-full h-full bg-gray-700 flex items-center justify-center">
+            <span className="text-xs text-gray-400">No image selected</span>
           </div>
-          
-          {/* Extra Message if enabled */}
-          {data.boolExtraMessage && data.extraMessage && (
-            <div className="my-8 px-8">
-              <p className="text-lg italic">{data.extraMessage}</p>
-            </div>
-          )}
-          
-          {/* Divider */}
-          <div className="w-3/4 h-px bg-white mx-auto my-8"></div>
-          
-          {/* Footer */}
-          <div className="mt-8 mb-8">
-            <p className="text-lg mb-2">{text.date}</p>
-            <p className="text-xl font-semibold px-8 py-2">
-              {data.dateOfDeath || "Date will appear here"}
-            </p>
-          </div>
+        )}
+      </div>
+
+      {/* Extra Message if enabled */}
+      {data.boolExtraMessage && data.extraMessage && (
+        <div className="my-2 sm:my-4 px-2 sm:px-6 text-center">
+          <p className="text-xs sm:text-lg italic">{data.extraMessage}</p>
         </div>
+      )}
+
+      {/* Divider */}
+      <div className="w-3/4 h-px bg-white mx-auto my-2 sm:my-4" />
+
+      {/* Footer (Date) */}
+      <div className="mt-2 sm:mt-4 mb-1 sm:mb-2 text-center">
+        <p className="text-xs sm:text-lg mb-1">{text.date}</p>
+        <p className="text-sm sm:text-xl font-semibold px-2 py-1">
+          {data.dateOfDeath || "Date will appear here"}
+        </p>
       </div>
     </div>
   );
