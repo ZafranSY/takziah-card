@@ -133,14 +133,14 @@ const MainPage: React.FC = () => {
       <div className={`${!showInputPanel ? "flex" : "hidden"} lg:flex lg:w-2/3 w-full h-screen overflow-auto`}>
         <div className="max-h-screen w-full bg-gray-100 dark:bg-gray-800 p-4 flex justify-center">
           <div className="max-w-4xl w-full mx-auto flex flex-col h-full justify-center items-center">
-            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-6 flex flex-col min-h-screen justify-center items-center">
+            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-6 flex flex-col min-h-fit justify-center items-center">
               {/* The TemplatePage container */}
-              <div className="flex-1 mb-6" ref={templateRef}>
+              <div className="flex-auto mb-6" ref={templateRef}>
                 <TemplatePage data={finalData} />
               </div>
 
               {/* Buttons container */}
-              <div className="flex justify-center gap-2 md:gap-4 pt-2 md:pt-4 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex justify-center gap-2 md:gap-4 pt-0 md:pt-4 border-t border-gray-200 dark:border-gray-700">
                 <button
                   onClick={handleDownload}
                   className="bg-green-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-green-600 transition-colors h-10"

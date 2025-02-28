@@ -27,9 +27,9 @@ const TemplatePage: React.FC<TemplatePageProps> = ({ data }) => {
     if (data.language === "Malay") {
       return {
         title: "Takziah",
-        subtitle: "Dengan penuh kesedihan, kami mengumumkan pemergian",
+        subtitle: "kepada seluruh keluarga",
         date: "Tarikh Kematian",
-        message: "Semoga Allah mencucuri rahmat ke atas roh beliau",
+        message: "Semoga rohnya dicucuri rahmat dan ditempatkan dalam kalangan mereka yang beriman",
       };
     } else {
       return {
@@ -81,7 +81,7 @@ const TemplatePage: React.FC<TemplatePageProps> = ({ data }) => {
       <h2 className="text-base sm:text-2xl font-semibold text-center">
         {text.title}
       </h2>
-      <p className="text-sm sm:text-lg mt-1 sm:mt-2 text-center">
+      <p className="text-sm sm:text-sm mt-1 sm:mt-2 text-center">
         {text.subtitle}
       </p>
 
@@ -107,6 +107,7 @@ const TemplatePage: React.FC<TemplatePageProps> = ({ data }) => {
           my-2 sm:my-4
           rounded-full
           overflow-hidden
+       
         "
       >
         {data.image ? (
@@ -118,8 +119,8 @@ const TemplatePage: React.FC<TemplatePageProps> = ({ data }) => {
             style={{ filter: "grayscale(100%)" }}
           />
         ) : (
-          <div className="w-full h-full bg-gray-700 flex items-center justify-center">
-            <span className="text-xs text-gray-400">No image selected</span>
+          <div className="w-full h-full bg-gray-700 flex items-center justify-center ">
+            <span className="text-xs text-gray-400 text-center">No image selected</span>
           </div>
         )}
       </div>
