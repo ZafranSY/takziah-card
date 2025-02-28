@@ -14,39 +14,27 @@ interface TemplateData {
 }
 
 const MainPage: React.FC = () => {
-  // Initial empty state for the form data
   const initialData: TemplateData = {
     name: "",
     image: "",
     extraMessage: "",
     language: "Malay",
     boolExtraMessage: false,
-    dateOfDeath: ""
+    dateOfDeath: "",
   };
-  
-  // Current form data state (updated by InputPanel)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   const [currentData, setCurrentData] = useState<TemplateData>(initialData);
-  
-  // Data to display in the template (only updated when Generate Card is clicked)
   const [finalData, setFinalData] = useState<TemplateData>(initialData);
-  
-  // Show/hide panels for mobile view
   const [showInputPanel, setShowInputPanel] = useState(true);
-  
-  // Ref for capturing template as image
+
   const templateRef = useRef<HTMLDivElement>(null);
 
   const handleDataChange = (data: TemplateData) => {
-    // Update the current data as user types
     setCurrentData(data);
   };
 
   const handleGenerateTemplate = (data: TemplateData) => {
-    // Update the final data for display in template
-    setFinalData({...data});
-    
-    // On smaller screens, switch to preview mode
+    setFinalData({ ...data });
     if (window.innerWidth < 1024) {
       setShowInputPanel(false);
     }
@@ -140,17 +128,13 @@ const MainPage: React.FC = () => {
       alert("There was an error generating the download. Please try again.");
     }
   };
-  
-  
 
   const handleReset = () => {
-    // Reset both form and displayed data
     setCurrentData(initialData);
     setFinalData(initialData);
-    // Return to input panel on mobile
     setShowInputPanel(true);
   };
-  
+
   const toggleView = () => {
     setShowInputPanel(!showInputPanel);
   };
@@ -158,63 +142,100 @@ const MainPage: React.FC = () => {
   return (
     <div className="bg-white dark:bg-gray-900 flex flex-col lg:flex-row h-screen overflow-hidden relative">
       {/* Mobile Toggle Button */}
-      <button 
+      <button
         onClick={toggleView}
         className="lg:hidden fixed bottom-4 right-4 z-50 bg-blue-600 text-white p-3 rounded-full shadow-lg"
       >
-        <svg 
-          className="w-6 h-6" 
-          fill="none" 
-          stroke="currentColor" 
-          viewBox="0 0 24 24"
-        >
-          {showInputPanel ? (
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-          ) : (
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-          )}
-        </svg>
+        {showInputPanel ? (
+          // Eye icon
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z 
+                 M2.458 12C3.732 7.943 7.523 5 
+                 12 5c4.478 0 8.268 2.943 
+                 9.542 7-1.274 4.057-5.064 
+                 7-9.542 7-4.477 0-8.268
+                 -2.943-9.542-7z"
+            />
+          </svg>
+        ) : (
+          // Pencil icon
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15.232 5.232l3.536 3.536
+                 m-2.036-5.036a2.5 2.5 
+                 0 113.536 3.536
+                 L6.5 21.036H3v-3.572
+                 L16.732 3.732z"
+            />
+          </svg>
+        )}
       </button>
 
       {/* Input Panel */}
-      <div className={`${showInputPanel ? 'flex' : 'hidden'} lg:flex lg:w-1/3 w-full h-screen`}>
-        <InputPanel 
+      <div
+        className={`
+          ${showInputPanel ? "flex" : "hidden"}
+          lg:flex lg:w-1/3 w-full h-screen
+        `}
+      >
+        <InputPanel
           onDataChange={handleDataChange}
           onGenerateCard={handleGenerateTemplate}
         />
       </div>
-      
+
       {/* Template Preview */}
-      <div className={`${!showInputPanel ? 'flex' : 'hidden'} lg:flex lg:w-2/3 w-full h-screen overflow-auto`}>
-        <div className="min-h-screen w-full bg-gray-100 dark:bg-gray-800 p-4 flex justify-center">
-          <div className="max-w-4xl w-full mx-auto flex flex-col h-full">
-            {/* Container for template and buttons */}
-            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-6 flex flex-col min-h-screen">
-              {/* Template container with fixed height and scrollable if needed */}
-              <div className="flex-1 overflow-auto mb-6" ref={templateRef}>
+      <div
+        className={`
+          ${!showInputPanel ? "flex" : "hidden"}
+          lg:flex lg:w-2/3 w-full h-screen overflow-auto
+        `}
+      >
+        <div className="max-h-screen w-full bg-gray-100 dark:bg-gray-800 p-4 flex justify-center">
+          <div className="max-w-4xl w-full mx-auto flex flex-col h-full justify-center items-center">
+            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-6 flex flex-col min-h-screen justify-center items-center">
+              {/* The TemplatePage container */}
+              <div className="flex-1 mb-6" ref={templateRef}>
                 <TemplatePage data={finalData} />
               </div>
-              
-              {/* Buttons container - fixed at bottom */}
-              <div className="flex justify-center gap-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+
+              {/* Buttons container */}
+              <div className="flex justify-center gap-2 md:gap-4 pt-2 md:pt-4 border-t border-gray-200 dark:border-gray-700">
                 <button
                   onClick={handleDownload}
-                  className="bg-green-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-green-600 transition-colors"
+                  className="bg-green-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-green-600 transition-colors h-10"
                 >
                   Download
                 </button>
                 <button
                   onClick={handleReset}
-                  className="bg-gray-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-gray-600 transition-colors"
+                  className="bg-gray-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-gray-600 transition-colors h-10"
                 >
                   Reset
                 </button>
                 {!showInputPanel && (
                   <button
                     onClick={toggleView}
-                    className="lg:hidden bg-blue-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-blue-600 transition-colors"
+                    className="lg:hidden bg-blue-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-blue-600 transition-colors h-10"
                   >
-                    Back to Edit
+                    Back
                   </button>
                 )}
               </div>
