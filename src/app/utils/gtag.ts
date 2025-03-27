@@ -1,10 +1,10 @@
 // src/app/utils/gtag.ts
-
 export const GA_TRACKING_ID = "G-S8GBJJ331E"; // Your Measurement ID
 
 // Safely trigger a pageview event
 export const pageview = (url: string) => {
-  if (typeof window !== "undefined" && window.dataLayer) {
+  if (typeof window !== "undefined") {
+    window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: "pageview",
       page: url,
@@ -24,12 +24,13 @@ export const event = ({
   label: string;
   value: number;
 }) => {
-  if (typeof window !== "undefined" && window.dataLayer) {
+  if (typeof window !== "undefined") {
+    window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: action,
-      category,
-      label,
-      value,
+      event_category: category,
+      event_label: label,
+      value: value,
     });
   }
 };
