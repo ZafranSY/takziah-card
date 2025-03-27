@@ -1,6 +1,11 @@
+// src/app/global.d.ts
+
 declare global {
   interface Window {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    dataLayer: Record<string, any>[]; // Define it as an array of objects
+    // Define dataLayer as an array of objects
+    dataLayer: Record<string, any>[];
   }
 }
+
+// This file needs to be a module
+export {};

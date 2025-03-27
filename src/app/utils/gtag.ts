@@ -1,6 +1,6 @@
-// utils/gtag.ts
+// src/app/utils/gtag.ts
 
-export const GA_TRACKING_ID = "G-S8GBJJ331E"; // Replace with your actual Measurement ID
+export const GA_TRACKING_ID = "G-S8GBJJ331E"; // Your Measurement ID
 
 // Safely trigger a pageview event
 export const pageview = (url: string) => {
